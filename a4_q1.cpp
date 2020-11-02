@@ -14,8 +14,6 @@
 // Due Date: Friday, November 6, 2020
 //**************************************************************
 
-// Tic Tac Toe
-
 #include <iostream>
 #include <vector>
 using namespace std;
