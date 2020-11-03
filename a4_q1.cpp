@@ -49,24 +49,26 @@ void execute_tic_tac_toe();
 
 void update_board(vector<vector<string>>& board, char& current_player) {
     int input = 0;
+    const int MIN_VAL = 1, MAX_VAL = 16;
     bool occupied = false;
-
+    
     do {
-
+        
         if (occupied) {
             cout << "Location is occupied." << endl;
         }
-
-        cout << "Player " << current_player << ", enter a location to mark (1-16): ";
+        
+        cout << "Enter a location to mark (" << MIN_VAL << "-" << MAX_VAL << "): ";
         cin >> input;
         
-        if (input >= 1 && input <= 16) {
+        if (input >= MIN_VAL && input <= MAX_VAL) {
             occupied = true && (board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "X" || board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "O");
         }
-    } while (input < 1 || input > 16 || occupied);
-
+        
+    } while (input < MIN_VAL || input > MAX_VAL || occupied);
+    
     board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] = current_player;
-
+    
     if (current_player == 'X') {
         current_player = 'O';
     }
