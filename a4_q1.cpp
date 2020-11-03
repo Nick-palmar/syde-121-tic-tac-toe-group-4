@@ -48,7 +48,23 @@ bool check_if_winner(vector<vector<string>> board) {
 
 
 void update_board(vector<vector<string>>& board, char& current_player) {
-
+    int input = 0;
+    bool occupied = false;
+    
+    do {
+        
+        if (occupied) {
+            cout << "Location is occupied." << endl;
+        }
+        
+        cout << "Enter a location to mark (1-16): ";
+        cin >> input;
+        
+        occupied = true && (board[(input - 1) / 4][(input - 1) % 4] == "X" || board[(input - 1) / 4][(input - 1) % 4] == "O");
+        
+    } while (input < 1 || input > 16 || occupied);
+    
+    board[(input - 1) / 4][(input - 1) % 4] = current_player;
 }
 
 
