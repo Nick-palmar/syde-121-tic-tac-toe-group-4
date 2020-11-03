@@ -64,7 +64,7 @@ void update_board(vector<vector<string>>& board, char& current_player) {
         
     } while (input < 1 || input > 16 || occupied);
     
-    board[(input - 1) / 4][(input - 1) % 4] = current_player;
+    board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] = current_player;
     
     if (current_player == 'X') {
         current_player = 'O';
