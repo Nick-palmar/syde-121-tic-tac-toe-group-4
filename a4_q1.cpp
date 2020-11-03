@@ -60,11 +60,18 @@ void update_board(vector<vector<string>>& board, char& current_player) {
         cout << "Enter a location to mark (1-16): ";
         cin >> input;
         
-        occupied = true && (board[(input - 1) / 4][(input - 1) % 4] == "X" || board[(input - 1) / 4][(input - 1) % 4] == "O");
+        occupied = true && (board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "X" || board[(input - 1) / 4][(input - 1) % 4] == "O");
         
     } while (input < 1 || input > 16 || occupied);
     
     board[(input - 1) / 4][(input - 1) % 4] = current_player;
+    
+    if (current_player == 'X') {
+        current_player = 'O';
+    }
+    else {
+        current_player = 'X';
+    }
 }
 
 
