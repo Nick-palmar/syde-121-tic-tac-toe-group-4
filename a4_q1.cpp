@@ -52,6 +52,7 @@ void update_board(vector<vector<string>>& board, char& current_player) {
     const int MIN_VAL = 1, MAX_VAL = 16;
     bool occupied = false;
     
+    // loops user input if user enters an invalid or occupied location
     do {
         
         if (occupied) {
@@ -61,14 +62,17 @@ void update_board(vector<vector<string>>& board, char& current_player) {
         cout << "Enter a location to mark (" << MIN_VAL << "-" << MAX_VAL << "): ";
         cin >> input;
         
+        // occupied is true if there exists an "X" or "O" in the entered location
         if (input >= MIN_VAL && input <= MAX_VAL) {
             occupied = true && (board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "X" || board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "O");
         }
         
     } while (input < MIN_VAL || input > MAX_VAL || occupied);
     
+    // updates the board with an "X" or "O" based on the turn
     board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] = current_player;
     
+    // switches the turn
     if (current_player == 'X') {
         current_player = 'O';
     }
@@ -83,7 +87,7 @@ void output_board(vector<vector<string>> board) {
     for (int col = 0; col < board.size(); col++) {
         cout << endl;
         for (int row = 0; row < board[col].size(); row++) {
-            // add extra space if lenght one
+            // add extra space if length one
             if (board[col][row].length() == 1)
                 cout << board[col][row] << " \t";
             // no extra space if length 2
