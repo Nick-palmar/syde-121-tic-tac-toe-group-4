@@ -64,7 +64,7 @@ void update_board(vector<vector<string>>& board, char& current_player) {
         
         // occupied is true if there exists an "X" or "O" in the entered location
         if (input >= MIN_VAL && input <= MAX_VAL) {
-            occupied = true && (board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "X" || board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "O");
+            occupied = board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "X" || board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "O";
         }
         
     } while (input < MIN_VAL || input > MAX_VAL || occupied);
