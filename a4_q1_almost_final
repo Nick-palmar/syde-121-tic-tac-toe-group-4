@@ -97,9 +97,11 @@ void output_victories(int score[]);
 
 
 bool check_diagonal(vector<vector<string>> board, int col, int row);
-// PURPOSE:
-//     INPUTS:
-//     OUTPUTS:
+// PURPOSE: Check using loops if there is a diagonal tic tac toe situation occuring
+//     INPUTS: board - a 2D vector containing all the elements in the board as strings (numbers for empty spaces, X's, O's)
+//             col - an integer value corresponding to the current column being checks
+//             row - an integer value corresponding to the current row being checks
+//     OUTPUTS: A boolean value; true if there is a tic tac toe diagonally otherwise false
 
 
 bool check_vertical(vector<vector<string>> board, int col, int row);
@@ -111,20 +113,24 @@ bool check_vertical(vector<vector<string>> board, int col, int row);
 
 
 bool check_horizontal(vector<vector<string>> board, int col, int row);
-// PURPOSE:
-//     INPUTS:
-//     OUTPUTS:
+// PURPOSE: Check recursively if there is a horizontal tic tac toe situation occuring
+//     INPUTS: board - a 2D vector containing all the elements in the board as strings (numbers for empty spaces, X's, O's)
+//             col - an integer value corresponding to the current column being checks
+//             row - an integer value corresponding to the current row being checks
+//     OUTPUTS: A boolean value; true if there is a tic tac toe horizontally otherwise false
 
 
 bool check_if_winner(vector<vector<string>> board);
 // PURPOSE: Check if someone has won the game by doing vertical, horizontal, and diagonal board checks
-//     INPUTS:
-//     OUTPUTS:
+//     INPUTS: board - a 2D vector containing all the elements in the board as strings (numbers for empty spaces, X's, O's)
+//     OUTPUTS: A boolean value; true if there is a winner meaning a tic tac toe diagonally, vertically, or horizontally otherwise false
 
 
 void update_board(vector<vector<string>>& board, char& current_player, char& other_player);
-// PURPOSE:
-//     INPUTS:
+// PURPOSE: Asks the user to input a location, inserts an X or O based on the turn if that location exists or is not occupied, and then switches the turn
+//     INPUTS: board - a 2D vector containing all the elements in the board as strings (numbers for empty spaces, X's, O's)
+//            current_player - an X or O character corresponding to the user whose turn it is
+//            other_player - an X or O character corresponding to the user whose turn is next
 //     OUTPUTS: Nothing
 
 
@@ -135,14 +141,13 @@ void output_board(vector<vector<string>> board);
 
 
 bool check_if_play_again();
-// PURPOSE:
-//     INPUTS:
-//     OUTPUTS:
+// PURPOSE: Checks if the user wants to play again
+//     INPUTS: Nothing
+//     OUTPUTS: A boolean value; true if the user enters 1 to repeat the game, false if the user enters 0 to quit the game
 
 
 void execute_tic_tac_toe();
 // PURPOSE: Execute the main tic tac toe program for player X and O on a 4x4 grid
-
 
 bool check_diagonal(vector<vector<string>> board, int col, int row) {
     // check if the space 1 row down and 1 column to the right is a match starting from the top left corner
@@ -260,7 +265,7 @@ void output_board(vector<vector<string>> board) {
     for (int row = 0; row < board.size(); row++) {
         cout << endl;
         for (int col = 0; col < board[row].size(); col++) {
-            // add extra space if length one
+            // add extra space if length 1
             if (board[row][col].length() == 1)
                 cout << board[row][col] << " \t";
             // no extra space if length 2
@@ -296,9 +301,9 @@ bool check_if_play_again() {
 
 void output_victories(int score[]) {
     // output the scores
-    cout << "\nPlayer X has won " << score[PLAYER_X] << " times!" << endl;
-    cout << "Player O has won " << score[PLAYER_O] << " times!" << endl;
-    cout << "There has been a tie " << score[TIE] << " times!" << endl;
+    cout << "\nPlayer X has won " << score[PLAYER_X] << (score[PLAYER_X] == 1 ? " time!" : " times!") << endl;
+    cout << "Player O has won " << score[PLAYER_O] << (score[PLAYER_O] == 1 ? " time!" : " times!") << endl;
+    cout << "There has been a tie " << score[TIE] << (score[TIE] == 1 ? " time!" : " times!") << endl;
 }
 
 
@@ -319,9 +324,9 @@ void execute_tic_tac_toe() {
         // sets the current and other player based on the starting player
         current_player = starting_player;
         
-        if (current_player == 'X') 
+        if (current_player == 'X')
             other_player = 'O';
-        else 
+        else
             other_player = 'X';
        
 
@@ -364,9 +369,9 @@ void execute_tic_tac_toe() {
         play_again = check_if_play_again();
 
         // if the game continues, the starting player switches
-        if (play_again && starting_player == 'X') 
+        if (play_again && starting_player == 'X')
             starting_player = 'O';
-        else if (play_again && starting_player == 'O') 
+        else if (play_again && starting_player == 'O')
             starting_player = 'X';
     } while (play_again);
 
