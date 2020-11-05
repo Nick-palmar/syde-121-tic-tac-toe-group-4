@@ -198,7 +198,7 @@ bool check_horizontal(vector<vector<string>> board, int col, int row) {
 
     // check if the next space to the right is not a match, move to next row if not
     if (board[row][col] != board[row][col + 1])
-        return check_vertical(board, 0, ++row);
+        return check_horizontal(board, 0, ++row);
 
     // next space to the right is a match, move to the right and continue check
     return check_horizontal(board, ++col, row);
