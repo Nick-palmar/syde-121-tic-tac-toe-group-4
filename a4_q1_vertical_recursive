@@ -1,0 +1,188 @@
+//***********************************************************
+// Student Name: 
+// Student Number: 
+//
+// SYDE 121 Lab: Home Assignment: 4, question 1
+// Filename: a4_q1
+// I hereby declare that this code, submitted for credit for the course
+// SYDE121, is a product of my own efforts.  This coded solution has
+// not been plagiarized from other sources and has not been knowingly
+// plagiarized by others
+//
+// Project: Tic Tac Toe
+// Purpose: Play tic tac toe with another person
+// Due Date: Friday, November 6, 2020
+//**************************************************************
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+bool check_vertical(vector<vector<string>> board, int col, int row);
+// PURPOSE: Check recursively if there is a vertical tic tac toe situation occuring 
+//     INPUTS: board - a 2D vector containing all the elements in the board as strings (numbers for empty spaces, X's, O's)
+//             col - an integer value corresponding to the current column being checks
+//             row - an integer value corresponding to the current row being checks
+//     OUTPUTS: A boolean value; true if there is a tic tac toe vertically otherwise false
+
+bool check_if_winner(vector<vector<string>> board);
+// PURPOSE: Check if someone has won the game by doing vertical, horizontal, and diagonal board checks
+//     INPUTS: 
+//     OUTPUTS: 
+
+
+void output_board(vector<vector<string>> board);
+// PURPOSE: Outputs the board to console to show occupied and unoccupied positions
+//     INPUTS: board - a 2D vector containing all the elements in the board as strings (numbers for empty spaces, X's, O's)
+//     OUTPUTS: Nothing; output to console
+
+
+void update_board(vector<vector<string>>& board, char& current_player, char& other_player);
+// PURPOSE: 
+//     INPUTS: 
+//     OUTPUTS: Nothing
+
+
+void execute_tic_tac_toe();
+// PURPOSE: 
+
+bool check_vertical(vector<vector<string>> board, int col, int row) {
+    // base case 1, reached the bottom: nothing is left to check, this is a vertical tic tac toe
+    if (row >= (board.size() - 1))
+        return true;
+
+    // base case 2, no more columns left to check, no tic tac toe has occured
+    else if (col >= board[row].size())
+        return false;
+
+    // check if the next space down is not a match, move to next column if not
+    if (board[row][col] != board[row + 1][col])
+        return check_vertical(board, ++col, 0);
+
+    // next space down is a match, move down and continue check
+    return check_vertical(board, col, ++row);
+}
+
+
+bool check_if_winner(vector<vector<string>> board) {
+    bool horizontal, vertical, diagonal;
+
+    vertical = check_vertical(board, 0, 0);
+
+    return vertical;
+}
+
+
+void update_board(vector<vector<string>>& board, char& current_player, char& other_player) {
+    int input = 0;
+    const int MIN_VAL = 1, MAX_VAL = 16;
+    bool occupied = false;
+
+    // loops user input if user enters an invalid or occupied location
+    do {
+
+        if (occupied) {
+            cout << "Location is occupied." << endl;
+        }
+
+        cout << "Player " << current_player << ", enter a location to mark (" << MIN_VAL << "-" << MAX_VAL << "): ";
+        cin >> input;
+
+        // occupied is true if there exists an "X" or "O" in the entered location
+        if (input >= MIN_VAL && input <= MAX_VAL) {
+            occupied = true && (board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "X" || board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] == "O");
+        }
+
+    } while (input < MIN_VAL || input > MAX_VAL || occupied);
+
+    // updates the board with an "X" or "O" based on the turn
+    board[(input - 1) / board[0].size()][(input - 1) % board[0].size()] = current_player;
+
+    // switches the turn
+    if (current_player == 'X') {
+        current_player = 'O';
+        other_player = 'X';
+    }
+    else {
+        current_player = 'X';
+        other_player = 'O';
+    }
+}
+
+
+void output_board(vector<vector<string>> board) {
+    // loop through all indicies and output with proper format
+    for (int row = 0; row < board.size(); row++) {
+        cout << endl;
+        for (int col = 0; col < board[row].size(); col++) {
+            // add extra space if lenght one
+            if (board[row][col].length() == 1)
+                cout << board[row][col] << " \t";
+            // no extra space if length 2
+            else
+                cout << board[row][col] << "\t";
+        }
+    }
+
+    // end line for formatting
+    cout << endl;
+
+}
+
+
+void execute_tic_tac_toe() {
+    // initialize and declare variables
+    vector<vector<string>> board = { {"1", "2", "3", "4"}, {"5", "6", "7", "8"}, {"9", "10", "11", "12"}, {"13", "14", "15", "16"} };
+    char starting_player = 'X';
+    char current_player = 'X', other_player = 'O';
+    bool winner = false;
+
+    while (true) {
+        output_board(board);
+        update_board(board, current_player, other_player);
+
+        if (check_if_winner(board))
+            cout << other_player << " has won vertically" << endl;
+     }
+
+    // vertical tic tac toe test cases
+    /*board = { {"X", "X", "X", "X" }, {"5", "6", "7", "8"}, {"9", "10", "11", "12"}, {"13", "14", "15", "16"} };
+    cout << "board 1: Expected -> 0. Returned: " << check_if_winner(board) << endl;
+
+    board = { {"X", "X", "X", "X" }, {"X", "6", "7", "8"}, {"X", "10", "11", "12"}, {"13", "14", "15", "16"} };
+    cout << "board 2: Expected -> 0. Returned: " << check_if_winner(board) << endl;
+
+    board = { {"X", "X", "X", "X" }, {"X", "6", "7", "8"}, {"X", "10", "11", "12"}, {"X", "14", "15", "16"} };
+    cout << "board 3: Expected -> 1. Returned: " << check_if_winner(board) << endl;
+
+    board = { {"X", "X", "X", "X" }, {"5", "6", "7", "X"}, {"9", "10", "11", "X"}, {"13", "14", "15", "X"} };
+    cout << "board 4: Expected -> 1. Returned: " << check_if_winner(board) << endl;
+
+    board = { {"X", "X", "X", "X" }, {"5", "6", "7", "X"}, {"9", "10", "11", "X"}, {"13", "14", "15", "O"} };
+    cout << "board 5: Expected -> 0. Returned: " << check_if_winner(board) << endl;
+
+    board = { {"X", "X", "O", "X" }, {"5", "6", "O", "X"}, {"9", "10", "O", "X"}, {"13", "14", "O", "O"} };
+    cout << "board 6: Expected -> 1. Returned: " << check_if_winner(board) << endl;*/
+
+
+    //    do {
+    //        // take input
+    //        update_board(board, current_player);
+    //
+    //        // output board to console
+    //        output_board(board);
+    //
+    //        // check game board
+    //        winner = check_if_winner(board);
+    //    } while (!winner);
+}
+
+
+int main()
+{
+    execute_tic_tac_toe();
+}
+
+
