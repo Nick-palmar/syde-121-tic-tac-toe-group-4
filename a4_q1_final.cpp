@@ -1,6 +1,6 @@
 //***********************************************************
 // Student Names: Nicolas Palmar and Kevin Wang
-// Student Number: 20883350 and 20886511
+// Student Number: 
 //
 // SYDE 121 Lab: Home Assignment: 4, question 1
 // Filename: a4_q1
